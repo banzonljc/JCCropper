@@ -1,0 +1,2 @@
+# JCCropper
+Crop square image
