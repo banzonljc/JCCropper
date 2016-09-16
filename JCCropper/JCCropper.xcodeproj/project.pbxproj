@@ -10,6 +10,7 @@
 		04B660311D8A0BF200B00E59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B660301D8A0BF200B00E59 /* AppDelegate.swift */; };
 		04B660331D8A0BF200B00E59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04B660321D8A0BF200B00E59 /* Assets.xcassets */; };
 		04B660361D8A0BF200B00E59 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04B660341D8A0BF200B00E59 /* MainMenu.xib */; };
+		04B6603E1D8A623600B00E59 /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04B6603D1D8A623600B00E59 /* sample.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +19,7 @@
 		04B660321D8A0BF200B00E59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04B660351D8A0BF200B00E59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		04B660371D8A0BF200B00E59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04B6603D1D8A623600B00E59 /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 				04B660321D8A0BF200B00E59 /* Assets.xcassets */,
 				04B660341D8A0BF200B00E59 /* MainMenu.xib */,
 				04B660371D8A0BF200B00E59 /* Info.plist */,
+				04B6603D1D8A623600B00E59 /* sample.jpg */,
 			);
 			path = JCCropper;
 			sourceTree = "<group>";
@@ -117,6 +120,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04B660331D8A0BF200B00E59 /* Assets.xcassets in Resources */,
+				04B6603E1D8A623600B00E59 /* sample.jpg in Resources */,
 				04B660361D8A0BF200B00E59 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

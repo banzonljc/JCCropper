@@ -13,6 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
 
+    @IBOutlet weak var resultImageView: NSImageView!
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
@@ -22,6 +23,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
 
-
+    
+    @IBAction func selectFromLocal(sender: AnyObject) {
+    }
+    
+    @IBAction func cropImage(sender: AnyObject) {
+    }
+    
 }
 
