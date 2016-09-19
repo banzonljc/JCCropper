@@ -11,6 +11,9 @@
 		04B660331D8A0BF200B00E59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04B660321D8A0BF200B00E59 /* Assets.xcassets */; };
 		04B660361D8A0BF200B00E59 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04B660341D8A0BF200B00E59 /* MainMenu.xib */; };
 		04B6603E1D8A623600B00E59 /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04B6603D1D8A623600B00E59 /* sample.jpg */; };
+		E62E4E9B1D8F8BFA0011669C /* JCCropImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62E4E9A1D8F8BFA0011669C /* JCCropImageView.swift */; };
+		E62E4E9D1D8F8C2D0011669C /* JCCropInnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62E4E9C1D8F8C2D0011669C /* JCCropInnerView.swift */; };
+		E62E4E9F1D8F91170011669C /* NSImageView+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62E4E9E1D8F91170011669C /* NSImageView+Helper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +23,9 @@
 		04B660351D8A0BF200B00E59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		04B660371D8A0BF200B00E59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04B6603D1D8A623600B00E59 /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample.jpg; sourceTree = "<group>"; };
+		E62E4E9A1D8F8BFA0011669C /* JCCropImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JCCropImageView.swift; sourceTree = "<group>"; };
+		E62E4E9C1D8F8C2D0011669C /* JCCropInnerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JCCropInnerView.swift; sourceTree = "<group>"; };
+		E62E4E9E1D8F91170011669C /* NSImageView+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImageView+Helper.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,9 @@
 				04B660341D8A0BF200B00E59 /* MainMenu.xib */,
 				04B660371D8A0BF200B00E59 /* Info.plist */,
 				04B6603D1D8A623600B00E59 /* sample.jpg */,
+				E62E4E9A1D8F8BFA0011669C /* JCCropImageView.swift */,
+				E62E4E9C1D8F8C2D0011669C /* JCCropInnerView.swift */,
+				E62E4E9E1D8F91170011669C /* NSImageView+Helper.swift */,
 			);
 			path = JCCropper;
 			sourceTree = "<group>";
@@ -133,6 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				04B660311D8A0BF200B00E59 /* AppDelegate.swift in Sources */,
+				E62E4E9F1D8F91170011669C /* NSImageView+Helper.swift in Sources */,
+				E62E4E9B1D8F8BFA0011669C /* JCCropImageView.swift in Sources */,
+				E62E4E9D1D8F8C2D0011669C /* JCCropInnerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +287,7 @@
 				04B6603C1D8A0BF200B00E59 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
