@@ -18,11 +18,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBOutlet weak var resultImageView: NSImageView!
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         inputImageView.image = NSImage(named: "sample")
     }
     
-    @IBAction func selectFromLocal(sender: AnyObject) {
+    @IBAction func selectFromLocal(_ sender: AnyObject) {
         let extensions: NSString = "jpg/jpeg/JPG/JPEG/png/PNG"
         let types = extensions.pathComponents
         let openPanel = NSOpenPanel()
@@ -33,11 +33,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         openPanel.canSelectHiddenExtension = true
         let result = openPanel.runModal()
         if result == NSModalResponseOK {
-            if let fileURL = openPanel.URL {
+            if let fileURL = openPanel.url {
                 do {
                     var fileSize: AnyObject?
-                    try fileURL.getResourceValue(&fileSize, forKey: NSURLFileSizeKey)
-                    if let number = fileSize as? NSNumber where number.intValue > 0, let path = fileURL.path, image = NSImage(contentsOfFile: path) {
+                    try (fileURL as NSURL).getResourceValue(&fileSize, forKey: URLResourceKey.fileSizeKey)
+                    let path = fileURL.path
+                    if let number = fileSize as? NSNumber , number.int32Value > 0, let image = NSImage(contentsOfFile: path) {
                         inputImageView.image = image
                     } else {
                         showErrorAlert("Error", info: "Can't fetch image")
@@ -49,16 +50,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func showErrorAlert(text: String, info: String) {
+    func showErrorAlert(_ text: String, info: String) {
         let alert: NSAlert = NSAlert()
         alert.messageText = text
         alert.informativeText = info
-        alert.alertStyle = NSAlertStyle.WarningAlertStyle
-        alert.addButtonWithTitle("OK")
+        alert.alertStyle = NSAlertStyle.warning
+        alert.addButton(withTitle: "OK")
         alert.runModal()
     }
     
-    @IBAction func cropImage(sender: AnyObject) {
+    @IBAction func cropImage(_ sender: AnyObject) {
         guard let image = inputImageView.getCroppedImage() else {
             return
         }

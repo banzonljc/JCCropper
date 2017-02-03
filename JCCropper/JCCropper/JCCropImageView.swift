@@ -15,16 +15,16 @@ let cropperCornerRadius: CGFloat = 15.0
 class JCCropImageView: NSImageView {
 
     enum PointLineRelation: Int {
-        case OnLeft = 1
-        case OnRight = 2
-        case OnTop = 4
-        case OnBottom = 8
-        case Inside = 0
-        case OutSide = -1
+        case onLeft = 1
+        case onRight = 2
+        case onTop = 4
+        case onBottom = 8
+        case inside = 0
+        case outSide = -1
     }
     
     enum DragType: Int {
-        case None, Move, New, CornerTopLeft, CornerTopRight, CornerButtomLeft, CornerButtomRight
+        case none, move, new, cornerTopLeft, cornerTopRight, cornerButtomLeft, cornerButtomRight
     }
     
     var cropImageContextContext: Int?
@@ -33,7 +33,7 @@ class JCCropImageView: NSImageView {
     var actualRect = NSZeroRect
     var cropRect = NSZeroRect
     
-    var dragType: DragType = .None
+    var dragType: DragType = .none
     
     var startPoint = NSZeroPoint
     var startFrame = NSZeroRect
@@ -58,7 +58,7 @@ class JCCropImageView: NSImageView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         cropView = JCCropInnerView(frame: NSMakeRect(-100,-100,0,0))
-        cropView!.viewStatus = .Normal
+        cropView!.viewStatus = .normal
         addSubview(cropView!)
     }
     
@@ -68,14 +68,14 @@ class JCCropImageView: NSImageView {
     }
     
     func getCroppedImage() -> NSImage? {
-        guard let cropFrame = cropView?.frame, image = image else {
+        guard let cropFrame = cropView?.frame, let image = image else {
             return nil
         }
         let ratioRect = NSMakeRect((cropFrame.origin.x - actualRect.origin.x) / actualRect.size.width, (cropFrame.origin.y - actualRect.origin.y) / actualRect.size.height, cropFrame.size.width / actualRect.size.width, cropFrame.size.height / actualRect.size.height)
         let rect = NSMakeRect(ratioRect.origin.x * image.size.width, ratioRect.origin.y * image.size.height, ratioRect.size.width * image.size.width, ratioRect.size.height * image.size.height)
         let cropped = NSImage(size: rect.size)
         cropped.lockFocus()
-        image.drawInRect(NSMakeRect(0.0, 0.0, rect.size.width, rect.size.height), fromRect: rect, operation: .CompositeSourceOut, fraction: 1.0)
+        image.draw(in: NSMakeRect(0.0, 0.0, rect.size.width, rect.size.height), from: rect, operation: .sourceOut, fraction: 1.0)
         cropped.unlockFocus()
         return cropped
     }
@@ -98,117 +98,117 @@ class JCCropImageView: NSImageView {
         cropView?.frame = NSMakeRect(actualRect.origin.x + (actualRect.size.width - width) * 0.5, actualRect.origin.y + (actualRect.size.height - height) * 0.5, width, height)
     }
     
-    override func mouseMoved(theEvent: NSEvent) {
+    override func mouseMoved(with theEvent: NSEvent) {
         guard let cropFrame = cropView?.frame else {
             return
         }
-        let point = convertPoint(theEvent.locationInWindow, fromView: nil)
-        dragType = .Move
+        let point = convert(theEvent.locationInWindow, from: nil)
+        dragType = .move
         
         let horiRelation = getPointLineRelation(point, onBorder: cropFrame, horizontal: true, width: cropperBorderWidth)
         let vertRelation = getPointLineRelation(point, onBorder: cropFrame, horizontal: false, width: cropperBorderWidth)
         let horiCrossRelation = getPointLineRelation(point, onBorder: cropFrame, horizontal: true, width: cropperCornerRadius)
         let vertCrossRelation = getPointLineRelation(point, onBorder: cropFrame, horizontal: false, width: cropperCornerRadius)
         
-        if horiRelation == .OutSide || vertRelation == .OutSide {
+        if horiRelation == .outSide || vertRelation == .outSide {
             var basePoint = point
             basePoint.x -= cropFrame.origin.x
             basePoint.y -= cropFrame.origin.y
             if abs(basePoint.x) < cropperCornerRadius && abs(basePoint.y) < cropperCornerRadius {
-                dragType = .CornerButtomLeft
+                dragType = .cornerButtomLeft
             } else if abs(basePoint.x) < cropperCornerRadius && abs(basePoint.y - cropFrame.size.height) < cropperCornerRadius {
-                dragType = .CornerTopLeft
+                dragType = .cornerTopLeft
             } else if abs(basePoint.x - cropFrame.size.width) < cropperCornerRadius && abs(basePoint.y - cropFrame.size.height) < cropperCornerRadius {
-                dragType = .CornerTopRight
+                dragType = .cornerTopRight
             } else if abs(basePoint.x - cropFrame.size.width) < cropperCornerRadius && abs(basePoint.y) < cropperCornerRadius {
-                dragType = .CornerButtomRight
+                dragType = .cornerButtomRight
             } else {
-                dragType = .None
+                dragType = .none
             }
-        } else if vertRelation == .OnTop {
-            if horiCrossRelation == .OnLeft {
-                dragType = .CornerTopLeft
-            } else if horiCrossRelation == .OnRight {
-                dragType = .CornerTopRight
+        } else if vertRelation == .onTop {
+            if horiCrossRelation == .onLeft {
+                dragType = .cornerTopLeft
+            } else if horiCrossRelation == .onRight {
+                dragType = .cornerTopRight
             }
-        } else if vertRelation == .OnBottom {
-            if horiCrossRelation == .OnLeft {
-                dragType = .CornerButtomLeft
-            } else if horiCrossRelation == .OnRight {
-                dragType = .CornerButtomRight
+        } else if vertRelation == .onBottom {
+            if horiCrossRelation == .onLeft {
+                dragType = .cornerButtomLeft
+            } else if horiCrossRelation == .onRight {
+                dragType = .cornerButtomRight
             }
-        } else if horiRelation == .OnLeft {
-            if vertCrossRelation == .OnTop {
-                dragType = .CornerTopLeft
-            } else if vertCrossRelation == .OnBottom {
-                dragType = .CornerButtomLeft
+        } else if horiRelation == .onLeft {
+            if vertCrossRelation == .onTop {
+                dragType = .cornerTopLeft
+            } else if vertCrossRelation == .onBottom {
+                dragType = .cornerButtomLeft
             }
-        } else if horiRelation == .OnRight {
-            if vertCrossRelation == .OnTop {
-                dragType = .CornerTopRight
-            } else if vertCrossRelation == .OnBottom {
-                dragType = .CornerButtomRight
+        } else if horiRelation == .onRight {
+            if vertCrossRelation == .onTop {
+                dragType = .cornerTopRight
+            } else if vertCrossRelation == .onBottom {
+                dragType = .cornerButtomRight
             }
         } else {
             var basePoint = point
             basePoint.x -= cropFrame.origin.x
             basePoint.y -= cropFrame.origin.y
             if abs(basePoint.x) < cropperCornerRadius && abs(basePoint.y) < cropperCornerRadius {
-                dragType = .CornerButtomLeft
+                dragType = .cornerButtomLeft
             } else if abs(basePoint.x) < cropperCornerRadius && abs(basePoint.y - cropFrame.size.height) < cropperCornerRadius {
-                dragType = .CornerTopLeft
+                dragType = .cornerTopLeft
             } else if abs(basePoint.x - cropFrame.size.width) < cropperCornerRadius && abs(basePoint.y - cropFrame.size.height) < cropperCornerRadius {
-                dragType = .CornerTopRight
+                dragType = .cornerTopRight
             } else if abs(basePoint.x - cropFrame.size.width) < cropperCornerRadius && abs(basePoint.y) < cropperCornerRadius {
-                dragType = .CornerButtomRight
+                dragType = .cornerButtomRight
             }
         }
         
-        if dragType.rawValue <= DragType.New.rawValue {
-            NSCursor.arrowCursor().set()
+        if dragType.rawValue <= DragType.new.rawValue {
+            NSCursor.arrow().set()
         } else {
-            NSCursor.pointingHandCursor().set()
+            NSCursor.pointingHand().set()
         }
     }
     
-    func getPointLineRelation(point: NSPoint, onBorder border: NSRect, horizontal: Bool, width: CGFloat) -> PointLineRelation {
+    func getPointLineRelation(_ point: NSPoint, onBorder border: NSRect, horizontal: Bool, width: CGFloat) -> PointLineRelation {
         var basePoint = point
         if NSPointInRect(basePoint, border) {
             basePoint.x -= border.origin.x
             basePoint.y -= border.origin.y
             if horizontal {
                 if basePoint.x < width {
-                    return .OnLeft
+                    return .onLeft
                 } else if basePoint.x > (border.size.width - width) {
-                    return .OnRight
+                    return .onRight
                 } else {
-                    return .Inside
+                    return .inside
                 }
             } else {
                 if basePoint.y < width {
-                    return .OnBottom
+                    return .onBottom
                 } else if basePoint.y > (border.size.height - width) {
-                    return .OnTop
+                    return .onTop
                 } else {
-                    return .Inside
+                    return .inside
                 }
             }
         }
-        return .OutSide
+        return .outSide
     }
     
-    override func mouseDown(theEvent: NSEvent) {
+    override func mouseDown(with theEvent: NSEvent) {
         guard let cropFrame = cropView?.frame else {
             return
         }
         startPoint = theEvent.locationInWindow
         startFrame = cropFrame
-        cropView?.viewStatus = .Dragging
+        cropView?.viewStatus = .dragging
         window?.disableCursorRects()
         needsDisplay = true
     }
     
-    override func mouseDragged(theEvent: NSEvent) {
+    override func mouseDragged(with theEvent: NSEvent) {
         guard let cropFrame = cropView?.frame else {
             return
         }
@@ -224,8 +224,8 @@ class JCCropImageView: NSImageView {
         var height = startFrame.size.height
         
         switch dragType {
-        case .New:
-            let newOrigin = convertPoint(startPoint, fromView: nil)
+        case .new:
+            let newOrigin = convert(startPoint, from: nil)
             if deltaX >= 0 {
                 if deltaY >= 0 {
                     x = newOrigin.x
@@ -344,7 +344,7 @@ class JCCropImageView: NSImageView {
                     }
                 }
             }
-        case .Move:
+        case .move:
             x += deltaX
             y += deltaY
             if x < actualRect.origin.x {
@@ -359,22 +359,22 @@ class JCCropImageView: NSImageView {
             if y + height > actualRect.origin.y + actualRect.size.height {
                 y = actualRect.origin.y + actualRect.size.height - height
             }
-        case .CornerTopLeft:
+        case .cornerTopLeft:
             let newOrigin = NSMakePoint(cropFrame.origin.x + cropFrame.size.width, cropFrame.origin.y)
-            startPoint = convertPoint(newOrigin, toView: nil)
-            dragType = .New
-        case .CornerButtomLeft:
+            startPoint = convert(newOrigin, to: nil)
+            dragType = .new
+        case .cornerButtomLeft:
             let newOrigin = NSMakePoint(cropFrame.origin.x + cropFrame.size.width, cropFrame.origin.y + cropFrame.size.height)
-            startPoint = convertPoint(newOrigin, toView: nil)
-            dragType = .New
-        case .CornerButtomRight:
+            startPoint = convert(newOrigin, to: nil)
+            dragType = .new
+        case .cornerButtomRight:
             let newOrigin = NSMakePoint(cropFrame.origin.x, cropFrame.origin.y + cropFrame.size.height)
-            startPoint = convertPoint(newOrigin, toView: nil)
-            dragType = .New
-        case .CornerTopRight:
+            startPoint = convert(newOrigin, to: nil)
+            dragType = .new
+        case .cornerTopRight:
             let newOrigin = NSMakePoint(cropFrame.origin.x, cropFrame.origin.y)
-            startPoint = convertPoint(newOrigin, toView: nil)
-            dragType = .New
+            startPoint = convert(newOrigin, to: nil)
+            dragType = .new
         default:
             break
         }
@@ -385,9 +385,9 @@ class JCCropImageView: NSImageView {
         needsDisplay = true
     }
     
-    override func mouseUp(theEvent: NSEvent) {
-        cropView?.viewStatus = .Normal
-        NSCursor.arrowCursor().set()
+    override func mouseUp(with theEvent: NSEvent) {
+        cropView?.viewStatus = .normal
+        NSCursor.arrow().set()
         window?.enableCursorRects()
         window?.resetCursorRects()
         needsDisplay = true

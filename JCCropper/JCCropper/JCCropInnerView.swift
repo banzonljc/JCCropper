@@ -14,10 +14,10 @@ class JCCropInnerView: NSView {
     let imageCropButtonUpRight: NSImage = NSImage(named: "imagemagnifyru")!
     
     enum ViewStatus: Int {
-        case None, Normal, Dragging
+        case none, normal, dragging
     }
     
-    var viewStatus: ViewStatus = .None {
+    var viewStatus: ViewStatus = .none {
         didSet {
             needsDisplay = true
         }
@@ -35,23 +35,23 @@ class JCCropInnerView: NSView {
         }
     }
     
-    override func drawRect(dirtyRect: NSRect) {
-        super.drawRect(dirtyRect)
-        if viewStatus == .None {
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+        if viewStatus == .none {
             return
         }
         let path = NSBezierPath(rect: bounds)
         path.lineWidth = cropperBorderWidth
-        NSColor.whiteColor().setStroke()
+        NSColor.white.setStroke()
         path.stroke()
-        NSColor.clearColor().setFill()
+        NSColor.clear.setFill()
         path.fill()
         if bounds.size.width > 2 * cropperCornerRadius && bounds.size.height > 2 * cropperCornerRadius {
             let sideLength = 2 * cropperCornerRadius
-            imageCropButtonUpRight.drawInRect(NSMakeRect(-cropperCornerRadius, -cropperCornerRadius, sideLength, sideLength), fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-            imageCropButtonUpRight.drawInRect(NSMakeRect(bounds.size.width - cropperCornerRadius,bounds.size.height - cropperCornerRadius, sideLength, sideLength), fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-            imageCropButtonUpLeft.drawInRect(NSMakeRect(-cropperCornerRadius, bounds.size.height - cropperCornerRadius, sideLength, sideLength), fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-            imageCropButtonUpLeft.drawInRect(NSMakeRect(bounds.size.width - cropperCornerRadius, -cropperCornerRadius, sideLength, sideLength), fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            imageCropButtonUpRight.draw(in: NSMakeRect(-cropperCornerRadius, -cropperCornerRadius, sideLength, sideLength), from: NSZeroRect, operation: .sourceOver, fraction: 1.0)
+            imageCropButtonUpRight.draw(in: NSMakeRect(bounds.size.width - cropperCornerRadius,bounds.size.height - cropperCornerRadius, sideLength, sideLength), from: NSZeroRect, operation: .sourceOver, fraction: 1.0)
+            imageCropButtonUpLeft.draw(in: NSMakeRect(-cropperCornerRadius, bounds.size.height - cropperCornerRadius, sideLength, sideLength), from: NSZeroRect, operation: .sourceOver, fraction: 1.0)
+            imageCropButtonUpLeft.draw(in: NSMakeRect(bounds.size.width - cropperCornerRadius, -cropperCornerRadius, sideLength, sideLength), from: NSZeroRect, operation: .sourceOver, fraction: 1.0)
         }
     }
 
