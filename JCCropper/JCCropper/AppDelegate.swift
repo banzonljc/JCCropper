@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var resultImageView: NSImageView!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        inputImageView.image = NSImage(named: "sample")
+        inputImageView.image = #imageLiteral(resourceName: "sample.jpg")
     }
     
     @IBAction func selectFromLocal(_ sender: AnyObject) {
@@ -32,7 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         openPanel.allowedFileTypes = types
         openPanel.canSelectHiddenExtension = true
         let result = openPanel.runModal()
-        if result == NSModalResponseOK {
+        if result == .OK {
             if let fileURL = openPanel.url {
                 do {
                     var fileSize: AnyObject?
@@ -54,7 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let alert: NSAlert = NSAlert()
         alert.messageText = text
         alert.informativeText = info
-        alert.alertStyle = NSAlertStyle.warning
+        alert.alertStyle = .warning
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }

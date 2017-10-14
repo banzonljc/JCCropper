@@ -10,8 +10,8 @@ import Cocoa
 
 class JCCropInnerView: NSView {
 
-    let imageCropButtonUpLeft: NSImage = NSImage(named: "imagemagnifylu")!
-    let imageCropButtonUpRight: NSImage = NSImage(named: "imagemagnifyru")!
+    let imageCropButtonUpLeft: NSImage = #imageLiteral(resourceName: "imagemagnifylu")
+    let imageCropButtonUpRight: NSImage = #imageLiteral(resourceName: "imagemagnifyru")
     
     enum ViewStatus: Int {
         case none, normal, dragging
@@ -24,15 +24,11 @@ class JCCropInnerView: NSView {
     }
     
     override var acceptsFirstResponder: Bool {
-        get {
-            return true
-        }
+        return true
     }
     
     override var wantsDefaultClipping: Bool {
-        get {
-            return false
-        }
+        return false
     }
     
     override func draw(_ dirtyRect: NSRect) {
@@ -54,6 +50,5 @@ class JCCropInnerView: NSView {
             imageCropButtonUpLeft.draw(in: NSMakeRect(bounds.size.width - cropperCornerRadius, -cropperCornerRadius, sideLength, sideLength), from: NSZeroRect, operation: .sourceOver, fraction: 1.0)
         }
     }
-
     
 }

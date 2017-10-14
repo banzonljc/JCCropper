@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -673,31 +674,36 @@
         <window title="JCCropper" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="335" y="390" width="600" height="600"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <view key="contentView" focusRingType="none" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box title="Box" boxType="custom" borderType="none" id="OEm-bA-jaW">
+                    <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="OEm-bA-jaW">
                         <rect key="frame" x="0.0" y="110" width="600" height="490"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                         <view key="contentView" focusRingType="none" id="f3z-cN-4P2">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="490"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="461-Bc-uSE" customClass="JCCropImageView" customModule="JCCropper" customModuleProvider="target">
+                                <imageView focusRingType="none" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="461-Bc-uSE" customClass="JCCropImageView" customModule="JCCropper" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="490"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="proportionallyUpOrDown" id="VSu-nn-Qw2"/>
                                 </imageView>
                             </subviews>
+                            <constraints>
+                                <constraint firstItem="461-Bc-uSE" firstAttribute="leading" secondItem="f3z-cN-4P2" secondAttribute="leading" id="3dg-Wi-Rk8"/>
+                                <constraint firstAttribute="trailing" secondItem="461-Bc-uSE" secondAttribute="trailing" id="7Af-wE-wWM"/>
+                                <constraint firstAttribute="bottom" secondItem="461-Bc-uSE" secondAttribute="bottom" id="Cuc-qo-bt2"/>
+                                <constraint firstItem="461-Bc-uSE" firstAttribute="top" secondItem="f3z-cN-4P2" secondAttribute="top" id="i8v-Qm-beQ"/>
+                            </constraints>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </box>
-                    <button verticalHuggingPriority="750" id="yRZ-Sk-NvT">
-                        <rect key="frame" x="20" y="43" width="125" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yRZ-Sk-NvT">
+                        <rect key="frame" x="20" y="43" width="74" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="qYX-Tb-abb"/>
+                        </constraints>
                         <buttonCell key="cell" type="roundTextured" title="Select file" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rtn-gj-hAe">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -706,9 +712,11 @@
                             <action selector="selectFromLocal:" target="Voe-Tx-rLC" id="das-fv-PhH"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" id="1Gu-pt-Nd5">
-                        <rect key="frame" x="165" y="43" width="125" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Gu-pt-Nd5">
+                        <rect key="frame" x="114" y="43" width="44" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="eJc-Bl-xQ7"/>
+                        </constraints>
                         <buttonCell key="cell" type="roundTextured" title="Crop" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eg5-cu-Ncd">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -717,12 +725,28 @@
                             <action selector="cropImage:" target="Voe-Tx-rLC" id="qAx-92-wFy"/>
                         </connections>
                     </button>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="6zX-1q-U4a">
-                        <rect key="frame" x="388" y="6" width="100" height="100"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6zX-1q-U4a">
+                        <rect key="frame" x="390" y="5" width="100" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="NmG-m6-Kmf"/>
+                            <constraint firstAttribute="height" constant="100" id="nXB-TS-QlV"/>
+                        </constraints>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="5UR-MD-1Nt"/>
                     </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="1Gu-pt-Nd5" secondAttribute="bottom" constant="45" id="3c1-L5-ce6"/>
+                    <constraint firstItem="OEm-bA-jaW" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="4kG-bY-dSt"/>
+                    <constraint firstAttribute="bottom" secondItem="6zX-1q-U4a" secondAttribute="bottom" constant="5" id="9Qd-mA-6Sj"/>
+                    <constraint firstAttribute="bottom" secondItem="yRZ-Sk-NvT" secondAttribute="bottom" constant="45" id="Ap1-lC-y2D"/>
+                    <constraint firstAttribute="trailing" secondItem="OEm-bA-jaW" secondAttribute="trailing" id="ID3-xY-Jo7"/>
+                    <constraint firstItem="yRZ-Sk-NvT" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="LAv-e8-d0G"/>
+                    <constraint firstAttribute="trailing" secondItem="6zX-1q-U4a" secondAttribute="trailing" constant="110" id="Pi6-gB-Mx5"/>
+                    <constraint firstItem="6zX-1q-U4a" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1Gu-pt-Nd5" secondAttribute="trailing" constant="10" id="UhU-0q-1Eu"/>
+                    <constraint firstItem="6zX-1q-U4a" firstAttribute="top" secondItem="OEm-bA-jaW" secondAttribute="bottom" constant="5" id="YhU-jC-Z4l"/>
+                    <constraint firstItem="OEm-bA-jaW" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="cEk-nu-Ed6"/>
+                    <constraint firstItem="1Gu-pt-Nd5" firstAttribute="leading" secondItem="yRZ-Sk-NvT" secondAttribute="trailing" constant="20" id="ohh-46-y2y"/>
+                </constraints>
             </view>
             <point key="canvasLocation" x="345" y="384"/>
         </window>

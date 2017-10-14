@@ -28,7 +28,7 @@ class JCCropImageView: NSImageView {
     }
     
     var cropImageContextContext: Int?
-    var cropView: JCCropInnerView?
+    var cropView = JCCropInnerView()
     
     var actualRect = NSZeroRect
     var cropRect = NSZeroRect
@@ -38,28 +38,33 @@ class JCCropImageView: NSImageView {
     var startPoint = NSZeroPoint
     var startFrame = NSZeroRect
     
-    
     override var acceptsFirstResponder: Bool {
-        get {
             return true
-        }
     }
     
     override var image: NSImage? {
         didSet {
             super.image = image
             actualRect = imageRect()
-            cropView?.frame = actualRect
-            cropView?.needsDisplay = true
+            cropView.frame = actualRect
+            cropView.needsDisplay = true
             setupSquareCropFrame()
         }
     }
     
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        commonInit()
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        cropView = JCCropInnerView(frame: NSMakeRect(-100,-100,0,0))
-        cropView!.viewStatus = .normal
-        addSubview(cropView!)
+        commonInit()
+    }
+    
+    func commonInit() {
+        cropView.viewStatus = .normal
+        addSubview(cropView)
     }
     
     override func viewDidMoveToWindow() {
@@ -68,23 +73,24 @@ class JCCropImageView: NSImageView {
     }
     
     func getCroppedImage() -> NSImage? {
-        guard let cropFrame = cropView?.frame, let image = image else {
+        guard let unwrappedImage = image else {
             return nil
         }
+        let cropFrame = cropView.frame
         let ratioRect = NSMakeRect((cropFrame.origin.x - actualRect.origin.x) / actualRect.size.width, (cropFrame.origin.y - actualRect.origin.y) / actualRect.size.height, cropFrame.size.width / actualRect.size.width, cropFrame.size.height / actualRect.size.height)
-        let rect = NSMakeRect(ratioRect.origin.x * image.size.width, ratioRect.origin.y * image.size.height, ratioRect.size.width * image.size.width, ratioRect.size.height * image.size.height)
+        let rect = NSMakeRect(ratioRect.origin.x * unwrappedImage.size.width, ratioRect.origin.y * unwrappedImage.size.height, ratioRect.size.width * unwrappedImage.size.width, ratioRect.size.height * unwrappedImage.size.height)
         let cropped = NSImage(size: rect.size)
         cropped.lockFocus()
-        image.draw(in: NSMakeRect(0.0, 0.0, rect.size.width, rect.size.height), from: rect, operation: .sourceOut, fraction: 1.0)
+        unwrappedImage.draw(in: NSMakeRect(0.0, 0.0, rect.size.width, rect.size.height), from: rect, operation: .sourceOut, fraction: 1.0)
         cropped.unlockFocus()
         return cropped
     }
     
     func setupSquareCropFrame() {
-        guard let image = image else {
+        guard let unwrappedImage = image else {
             return
         }
-        let imageAspect = image.size.width / image.size.height
+        let imageAspect = unwrappedImage.size.width / unwrappedImage.size.height
         var width = actualRect.size.width
         var height = actualRect.size.height
         let constraintAspect: CGFloat = 1.0
@@ -95,13 +101,11 @@ class JCCropImageView: NSImageView {
             width = actualRect.size.width
             height = width / constraintAspect
         }
-        cropView?.frame = NSMakeRect(actualRect.origin.x + (actualRect.size.width - width) * 0.5, actualRect.origin.y + (actualRect.size.height - height) * 0.5, width, height)
+        cropView.frame = NSMakeRect(actualRect.origin.x + (actualRect.size.width - width) * 0.5, actualRect.origin.y + (actualRect.size.height - height) * 0.5, width, height)
     }
     
     override func mouseMoved(with theEvent: NSEvent) {
-        guard let cropFrame = cropView?.frame else {
-            return
-        }
+        let cropFrame = cropView.frame
         let point = convert(theEvent.locationInWindow, from: nil)
         dragType = .move
         
@@ -165,9 +169,9 @@ class JCCropImageView: NSImageView {
         }
         
         if dragType.rawValue <= DragType.new.rawValue {
-            NSCursor.arrow().set()
+            NSCursor.arrow.set()
         } else {
-            NSCursor.pointingHand().set()
+            NSCursor.pointingHand.set()
         }
     }
     
@@ -198,20 +202,16 @@ class JCCropImageView: NSImageView {
     }
     
     override func mouseDown(with theEvent: NSEvent) {
-        guard let cropFrame = cropView?.frame else {
-            return
-        }
+        let cropFrame = cropView.frame
         startPoint = theEvent.locationInWindow
         startFrame = cropFrame
-        cropView?.viewStatus = .dragging
+        cropView.viewStatus = .dragging
         window?.disableCursorRects()
         needsDisplay = true
     }
     
     override func mouseDragged(with theEvent: NSEvent) {
-        guard let cropFrame = cropView?.frame else {
-            return
-        }
+        let cropFrame = cropView.frame
         let curPoint = theEvent.locationInWindow
         let deltaX = curPoint.x - startPoint.x
         let deltaY = curPoint.y - startPoint.y
@@ -381,13 +381,13 @@ class JCCropImageView: NSImageView {
         guard width >= cropperMinSize && height >= cropperMinSize else {
             return
         }
-        cropView?.frame = NSMakeRect(x, y, width, height)
+        cropView.frame = NSMakeRect(x, y, width, height)
         needsDisplay = true
     }
     
     override func mouseUp(with theEvent: NSEvent) {
-        cropView?.viewStatus = .normal
-        NSCursor.arrow().set()
+        cropView.viewStatus = .normal
+        NSCursor.arrow.set()
         window?.enableCursorRects()
         window?.resetCursorRects()
         needsDisplay = true
